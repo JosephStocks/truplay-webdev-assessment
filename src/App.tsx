@@ -1,5 +1,5 @@
 function App() {
-  return <>Empty home page. Starting from clean project.</>;
+  return <p className="">Empty home page. Starting from clean project.</p>;
 }
 
 export default App;

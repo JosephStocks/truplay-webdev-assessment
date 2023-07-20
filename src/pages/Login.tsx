@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useTitle } from "../utils";
-import { useEffect } from "react";
 
 type FormValues = {
   accountId: string;

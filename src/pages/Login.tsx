@@ -47,9 +47,7 @@ const Login = () => {
                 {...register("email", {
                   required: true,
                   validate: (val: string) => {
-                    if (
-                      !Object.prototype.hasOwnProperty.call(localStorage, val)
-                    ) {
+                    if (localStorage.getItem(val) === null) {
                       return "email doesn't exist";
                     }
                   },
@@ -80,12 +78,21 @@ const Login = () => {
                   validate: (val: string) => {
                     // This value should be hashed then compared to the stored hashed password.
                     // For simplicity and time, I am comparing plaintext to stored plaintext password.
-                    const userObj: FormValues = JSON.parse(
-                      localStorage.getItem(getValues("email")) || ""
-                    ) as FormValues;
-                    console.log(val, userObj.password);
-                    if (val !== userObj.password) {
-                      return "Incorrect password!";
+                    const localStorageItem = localStorage.getItem(
+                      getValues("email")
+                    );
+
+                    let userObj: FormValues;
+
+                    if (localStorageItem) {
+                      try {
+                        userObj = JSON.parse(localStorageItem) as FormValues;
+                        if (val !== userObj.password) {
+                          return "Incorrect password!";
+                        }
+                      } catch (error) {
+                        return "email doesn't exist";
+                      }
                     }
                   },
                 })}

@@ -7,3 +7,13 @@ export const useTitle = (subTitle: string) => {
     document.title = buildTitle(subTitle);
   }, [subTitle]);
 };
+
+export type FormValues = {
+  accountId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  phoneNumber: string;
+};

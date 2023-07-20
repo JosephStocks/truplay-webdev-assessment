@@ -21,8 +21,8 @@ const Login = () => {
     formState: { errors },
     getValues,
   } = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = () => {
-    navigate("/settings");
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    navigate("/settings", { state: { email: data.email } });
   };
 
   return (

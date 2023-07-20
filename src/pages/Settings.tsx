@@ -1,9 +1,42 @@
+import { useEffect, useState } from "react";
 import { ChevronRightIcon, PencilIcon } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTitle } from "../utils";
+import { FormValues } from "../utils";
 
 const Settings = () => {
   useTitle("Settings");
+  const [data, setData] = useState<FormValues>({
+    accountId: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phoneNumber: "",
+  });
+
+  interface LocationState {
+    state: {
+      email: string;
+    };
+  }
+
+  const location = useLocation() as LocationState;
+
+  useEffect(() => {
+    if (typeof location.state === "object" && location.state?.email) {
+      const storedData = localStorage.getItem(location.state?.email);
+      if (storedData) {
+        try {
+          const userObj: FormValues = JSON.parse(storedData) as FormValues;
+          setData(userObj);
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+        }
+      }
+    }
+  }, [location.state]);
 
   return (
     <main className="flex flex-col max-w-screen-md mx-auto px-4">
@@ -16,7 +49,7 @@ const Settings = () => {
           <div className="flex justify-between mt-6">
             <div>
               <h3>Email Address</h3>
-              <p className="text-text-faint">sample.email@gmail.com</p>
+              <p className="text-text-faint">{data.email && data.email}</p>
             </div>
             <button className="bg-gradient-to-r from-button-gradient-green via-button-gradient-blue to-button-gradient-green bg-[position:_0%] bg-[size:_200%] hover:bg-[position:_100%] transition-all duration-200 flex items-center justify-center rounded-full px-3">
               <span className="ml-1 px-1">Verify Email</span>

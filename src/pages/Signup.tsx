@@ -23,8 +23,7 @@ const Signup = () => {
   } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     localStorage.setItem(data.email, JSON.stringify(data));
-    console.log(data);
-    navigate("/settings");
+    navigate("/settings", { state: { email: data.email } });
   };
 
   return (

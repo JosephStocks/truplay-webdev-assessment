@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-    @apply bg-red-500 min-h-screen;
+  @apply bg-background min-h-screen text-white;
 }
